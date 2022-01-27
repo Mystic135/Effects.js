@@ -1,6 +1,6 @@
 const jimp = require('jimp');
 
-class Blur {
+class Brightness {
     constructor(data = {}) {
         this.res = null;
         this.file = data.file ?? null;
@@ -23,7 +23,7 @@ class Blur {
     setLevel(number) {
         const value = parseInt(number);
 
-        if (!value || value <= 0 || value > 20) return this;
+        if (!value || value <= 0 || value > 9) return this;
 
         this.level = number;
         return this;
@@ -31,7 +31,7 @@ class Blur {
 
     async build() {
         this.res = await jimp.read(this.image);
-        this.res.blur(Number(this.level));
+        this.res.brightness(Number(`0.${this.level}`));
 
         this.file ? await this.res.write(this.file) : null;
 
@@ -41,4 +41,4 @@ class Blur {
     }
 }
 
-module.exports = Blur;
+module.exports = Brightness;

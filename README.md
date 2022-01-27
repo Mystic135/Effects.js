@@ -20,10 +20,45 @@ new Blur()
     .build().then(console.log('Saved'))
 
 new Blur({
-    file: './new.png',
+    image: './img.png',
     level: 5,
-    image: './img.png'
+    file: './new.png'
 }).build().then(console.log('Saved'))
 ```
+
+Simple Discord example (discord.js v13)
+
+```js
+const { Blur } = require('effects-gallery.js');
+const { Client, Intents } = require('discord.js');
+
+const client = new Client({
+    intents: [
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_MESSAGES
+    ]
+});
+
+client.on('messageCreate', (message) => {
+    if (message.author.bot) return;
+
+    new Blur()
+        .setImage('./img.png')
+        .setLevel(5)
+        .build().then(res => {
+            message.channel.send({
+                content: 'Hello world', files: [
+                    { attachment: res }
+                ]
+            })
+        })
+});
+
+client.login('');
+```
+
+### ⚡️ Available features
+
+Find the features available on the [GitHub](https://github.com/ZerioDev/Effects.js/tree/main/testing) page of the project.
 
 Realized with ❤️ by [ZerioDev](https://github.com/ZerioDev).

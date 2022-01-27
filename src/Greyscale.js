@@ -1,11 +1,10 @@
 const jimp = require('jimp');
 
-class Blur {
+class Greyscale {
     constructor(data = {}) {
         this.res = null;
         this.file = data.file ?? null;
         this.image = data.image;
-        this.level = data.level ?? 5;
     }
 
     write(file) {
@@ -20,18 +19,9 @@ class Blur {
         return this;
     }
 
-    setLevel(number) {
-        const value = parseInt(number);
-
-        if (!value || value <= 0 || value > 20) return this;
-
-        this.level = number;
-        return this;
-    }
-
     async build() {
         this.res = await jimp.read(this.image);
-        this.res.blur(Number(this.level));
+        this.res.greyscale();
 
         this.file ? await this.res.write(this.file) : null;
 
@@ -41,4 +31,4 @@ class Blur {
     }
 }
 
-module.exports = Blur;
+module.exports = Greyscale;
